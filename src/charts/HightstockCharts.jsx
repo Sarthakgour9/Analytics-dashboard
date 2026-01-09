@@ -4,7 +4,7 @@ import HighchartsReact from "highcharts-react-official";
 import{
     revenueTimeSeries,
     usersTimeSeries,
-}   from "../data/mockdata";
+}   from "../data/mockData";
 
 // Highstock Options
 

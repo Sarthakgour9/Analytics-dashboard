@@ -1,5 +1,5 @@
 import { AgGridReact} from "ag-grid-react";
-import { usersTableData } from "../data/mockdata";
+import { usersTableData } from "../data/mockData";
 
 function AgGridTable() {
 

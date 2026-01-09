@@ -5,7 +5,7 @@ import {
   months,
   monthlyRevenue,
   monthlyUsers,
-} from "../data/mockdata";
+} from "../data/mockData";
 
 function HighchartsCharts() {
   const revenueOptions = {

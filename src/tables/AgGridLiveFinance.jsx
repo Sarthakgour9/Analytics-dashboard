@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 
-import { generateFinanceRow } from "../data/mockdata";
+import { generateFinanceRow } from "../data/mockData";
 
 function AgGridLiveFinance() {
     const [rowData, setRowData] = useState([]);

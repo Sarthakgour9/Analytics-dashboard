@@ -1,4 +1,4 @@
-import CanvasPlayground from "../canvas/canvasPlayground";
+import CanvasPlayground from "../canvas/CanvasPlayground";
 
 function CanvasPage() {
     return (
