@@ -2,27 +2,21 @@
 
 function Dashboard() {
   return (
-    <div>
-      <h1 style={{ fontSize: "28px", marginBottom: "10px" }}>
+    <div className="dashboard">
+      <h1 className="dashboard-title">
         Welcome to Analytics Dashboard
       </h1>
 
-      <p style={{ color: "#475569", marginBottom: "20px" }}>
+      <p className="dashboard-description">
         Use the sidebar to explore detailed analytics, charts, tables,
         maps, and interactive components.
       </p>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: window.innerWidth <= 768 ? "1fr" : window.innerWidth <= 1024 ? "repeat(2, 1fr)" : "repeat(3, 1fr)",
-          gap: "16px",
-        }}
-      >
+      <div className="dashboard-grid">
         <StatCard title="Charts" value="Chart.js & Highcharts" />
         <StatCard title="Tables" value="AG Grid" />
         <StatCard title="Maps" value="OpenLayers" />
-        <StatCard title = "Interactive Components" value="React DnD & React Flow" />
+        <StatCard title="Interactive Components" value="React DnD & React Flow" />
         <StatCard title="Canvas" value="HTML Canvas" />
       </div>
     </div>

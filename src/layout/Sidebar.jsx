@@ -18,36 +18,53 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   };
 
   return (
-    <aside
-      style={{
-        width: window.innerWidth <= 768 ? (isOpen ? "240px" : "0") : "240px",
-        background: "#0f172a",
-        color: "#fff",
-        padding: window.innerWidth <= 768 ? (isOpen ? "20px" : "0") : "20px",
-        overflow: "hidden",
-        transition: "width 0.3s ease, padding 0.3s ease",
-        position: window.innerWidth <= 768 ? "fixed" : "static",
-        height: "100vh",
-        zIndex: 999,
-      }}
-    >
-      {isOpen || window.innerWidth > 768 ? (
-        <>
-          <h2 style={{ marginBottom: "20px" }}>Analytics</h2>
-          <nav>
-            <NavLink to="/" style={linkStyle} onClick={handleLinkClick}>Dashboard</NavLink>
-            <NavLink to="/chartjs" style={linkStyle} onClick={handleLinkClick}>Chart.js</NavLink>
-            <NavLink to="/highcharts" style={linkStyle} onClick={handleLinkClick}>Highcharts</NavLink>
-            <NavLink to="/ag-grid" style={linkStyle} onClick={handleLinkClick}>AG Grid</NavLink>
-            <NavLink to="/ag-grid-live" style={linkStyle} onClick={handleLinkClick}>AG Grid Live</NavLink>
-            <NavLink to="/drag-drop" style={linkStyle} onClick={handleLinkClick}>Drag & Drop</NavLink>
-            <NavLink to="/maps" style={linkStyle} onClick={handleLinkClick}>Maps</NavLink>
-            <NavLink to="/wysiwyg" style={linkStyle} onClick={handleLinkClick}>Wysiwyg</NavLink>
-            <NavLink to="/canvas" style={linkStyle} onClick={handleLinkClick}>Canvas</NavLink>
-          </nav>
-        </>
-      ) : null}
-    </aside>
+    <>
+      {/* Overlay for mobile */}
+      {window.innerWidth <= 768 && isOpen && (
+        <div
+          onClick={() => setIsOpen(false)}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(0,0,0,0.5)",
+            zIndex: 998,
+          }}
+        />
+      )}
+      <aside
+        style={{
+          width: window.innerWidth <= 768 ? (isOpen ? "240px" : "0") : "240px",
+          background: "#0f172a",
+          color: "#fff",
+          padding: window.innerWidth <= 768 ? (isOpen ? "20px" : "0") : "20px",
+          overflow: "hidden",
+          transition: "width 0.3s ease, padding 0.3s ease",
+          position: window.innerWidth <= 768 ? "fixed" : "static",
+          height: "100vh",
+          zIndex: 999,
+        }}
+      >
+        {isOpen || window.innerWidth > 768 ? (
+          <>
+            <h2 style={{ marginBottom: "20px" }}>Analytics</h2>
+            <nav>
+              <NavLink to="/" style={linkStyle} onClick={handleLinkClick}>Dashboard</NavLink>
+              <NavLink to="/chartjs" style={linkStyle} onClick={handleLinkClick}>Chart.js</NavLink>
+              <NavLink to="/highcharts" style={linkStyle} onClick={handleLinkClick}>Highcharts</NavLink>
+              <NavLink to="/ag-grid" style={linkStyle} onClick={handleLinkClick}>AG Grid</NavLink>
+              <NavLink to="/ag-grid-live" style={linkStyle} onClick={handleLinkClick}>AG Grid Live</NavLink>
+              <NavLink to="/drag-drop" style={linkStyle} onClick={handleLinkClick}>Drag & Drop</NavLink>
+              <NavLink to="/maps" style={linkStyle} onClick={handleLinkClick}>Maps</NavLink>
+              <NavLink to="/wysiwyg" style={linkStyle} onClick={handleLinkClick}>Wysiwyg</NavLink>
+              <NavLink to="/canvas" style={linkStyle} onClick={handleLinkClick}>Canvas</NavLink>
+            </nav>
+          </>
+        ) : null}
+      </aside>
+    </>
   );
 };
 
