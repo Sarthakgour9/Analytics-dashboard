@@ -10,6 +10,7 @@ import MapPage from "./pages/MapPage";
 import AgGridLivePage from "./pages/AgGridLivePage";
 import WysiwygPage from "./pages/WysiwygPage";
 import CanvasPage from "./pages/CanvasPage";
+import FlowPage from "./pages/FlowPage";
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <Route path="ag-grid-live" element={<AgGridLivePage />} />
           <Route path="wysiwyg" element={<WysiwygPage />} />
           <Route path = "canvas" element={<CanvasPage />} />
+          <Route path="flow" element={<FlowPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

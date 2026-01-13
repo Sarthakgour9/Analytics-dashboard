@@ -60,6 +60,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               <NavLink to="/maps" style={linkStyle} onClick={handleLinkClick}>Maps</NavLink>
               <NavLink to="/wysiwyg" style={linkStyle} onClick={handleLinkClick}>Wysiwyg</NavLink>
               <NavLink to="/canvas" style={linkStyle} onClick={handleLinkClick}>Canvas</NavLink>
+              <NavLink to="/flow" style={linkStyle} onClick={handleLinkClick}>React Flow</NavLink>
             </nav>
           </>
         ) : null}
