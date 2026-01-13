@@ -9,6 +9,7 @@ import ReactFlow, {
   Panel,
 } from "reactflow";
 import CustomNode from "./CustomNode";
+import useWindowSize from "../hooks/useWindowSize";
 
 import "reactflow/dist/style.css";
 
@@ -48,6 +49,8 @@ function FlowEditor() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [nodeId, setNodeId] = useState(4);
+  const { width, height } = useWindowSize();
+  const isMobile = width < 768;
 
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge({ ...params, style: { stroke: '#007acc', strokeWidth: 2 } }, eds)),
@@ -65,66 +68,74 @@ function FlowEditor() {
     setNodeId((id) => id + 1);
   }, [nodeId, setNodes]);
 
+  const containerHeight = isMobile ? `${height - 200}px` : "600px";
+
   return (
-    <div style={{ height: "600px", display: "flex", backgroundColor: "var(--bg-primary)" }}>
+    <div style={{
+      height: containerHeight,
+      display: "flex",
+      flexDirection: isMobile ? "column" : "row",
+      backgroundColor: "var(--bg-primary)"
+    }}>
       {/* Node Sidebar */}
       <div style={{
-        width: "200px",
+        width: isMobile ? "100%" : "200px",
+        height: isMobile ? "auto" : "100%",
         padding: "20px",
         backgroundColor: "var(--bg-secondary)",
-        borderRight: "1px solid var(--border)",
+        borderRight: isMobile ? "none" : "1px solid var(--border)",
+        borderBottom: isMobile ? "1px solid var(--border)" : "none",
         color: "var(--text-primary)"
       }}>
         <h3 style={{ marginTop: 0 }}>Nodes</h3>
-        <button
-          onClick={() => addNode('input')}
-          style={{
-            width: "100%",
-            padding: "10px",
-            marginBottom: "10px",
-            backgroundColor: "#4ade80",
-            color: "#fff",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer"
-          }}
-        >
-          Add Input Node
-        </button>
-        <button
-          onClick={() => addNode('default')}
-          style={{
-            width: "100%",
-            padding: "10px",
-            marginBottom: "10px",
-            backgroundColor: "#3b82f6",
-            color: "#fff",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer"
-          }}
-        >
-          Add Process Node
-        </button>
-        <button
-          onClick={() => addNode('output')}
-          style={{
-            width: "100%",
-            padding: "10px",
-            marginBottom: "10px",
-            backgroundColor: "#f59e0b",
-            color: "#fff",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer"
-          }}
-        >
-          Add Output Node
-        </button>
+        <div style={{ display: "flex", flexDirection: isMobile ? "row" : "column", gap: "10px" }}>
+          <button
+            onClick={() => addNode('input')}
+            style={{
+              flex: isMobile ? 1 : "none",
+              padding: "10px",
+              backgroundColor: "#4ade80",
+              color: "#fff",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer"
+            }}
+          >
+            Add Input
+          </button>
+          <button
+            onClick={() => addNode('default')}
+            style={{
+              flex: isMobile ? 1 : "none",
+              padding: "10px",
+              backgroundColor: "#3b82f6",
+              color: "#fff",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer"
+            }}
+          >
+            Add Process
+          </button>
+          <button
+            onClick={() => addNode('output')}
+            style={{
+              flex: isMobile ? 1 : "none",
+              padding: "10px",
+              backgroundColor: "#f59e0b",
+              color: "#fff",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer"
+            }}
+          >
+            Add Output
+          </button>
+        </div>
       </div>
 
       {/* React Flow Canvas */}
-      <div style={{ flex: 1 }}>
+      <div style={{ flex: 1, height: isMobile ? "calc(100% - 120px)" : "100%" }}>
         <ReactFlow
           nodes={nodes}
           edges={edges}
