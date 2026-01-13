@@ -1,8 +1,9 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .logo {
@@ -12,10 +13,10 @@
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em rgba(79, 158, 255, 0.67));
 }
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop-shadow(0 0 2em rgba(97, 218, 251, 0.67));
 }
 
 @keyframes logo-spin {
@@ -35,24 +36,33 @@
 
 .card {
   padding: 2em;
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
 }
 
 .read-the-docs {
-  color: #888;
+  color: var(--text-secondary);
 }
 
 /* Dashboard Styles */
 .dashboard {
-  padding: 20px;
+  padding: 2rem;
+  background-color: var(--bg-primary);
+  min-height: 100vh;
+  color: var(--text-primary);
 }
 
 .dashboard-title {
   font-size: 28px;
   margin-bottom: 10px;
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
 .dashboard-description {
-  color: #475569;
+  color: var(--text-secondary);
   margin-bottom: 20px;
 }
 
@@ -90,6 +100,5 @@
   #root {
     padding: 0;
     margin: 0;
-    max-width: none;
   }
 }

@@ -43,31 +43,31 @@ const usersStockOptions = {
 function HighStockCharts() {
     return (
         <div>
-            <card>
+            <Card>
                 <HighchartsReact
-                    highcharts={Highcharts} 
+                    highcharts={Highcharts}
                     constructorType={"stockChart"}
                     options={revenueStockOptions}
                     />
-            </card>
-            <card>
+            </Card>
+            <Card>
                 <HighchartsReact
-                    highcharts={Highcharts} 
+                    highcharts={Highcharts}
                     constructorType={"stockChart"}
                     options={usersStockOptions}
                     />
-            </card>
+            </Card>
         </div>
     )
 };
 
-const card = ({children}) =>(
+const Card = () =>(
     <div style={{
         background:"#000000ff",
         padding:"16px",
         borderRadius:"8px",
         marginBottom:"20px",
-    }}>    
+    }}>
     </div>
 );
 export default HighStockCharts;

@@ -1,18 +1,25 @@
 import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { ThemeContext } from "../context/ThemeContext";
+import useWindowSize from "../hooks/useWindowSize";
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
+  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { width } = useWindowSize();
+  const isMobile = width <= 768;
+
   const linkStyle = ({ isActive }) => ({
     padding: "12px 16px",
     display: "block",
     textDecoration: "none",
-    color: isActive ? "#fff" : "#cbd5e1",
-    backgroundColor: isActive ? "#2563eb" : "transparent",
+    color: isActive ? "var(--text-primary)" : "var(--sidebar-text)",
+    backgroundColor: isActive ? "var(--sidebar-active)" : "transparent",
     borderRadius: "6px",
     marginBottom: "6px",
   });
 
   const handleLinkClick = () => {
-    if (window.innerWidth <= 768) {
+    if (isMobile) {
       setIsOpen(false);
     }
   };
@@ -20,7 +27,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   return (
     <>
       {/* Overlay for mobile */}
-      {window.innerWidth <= 768 && isOpen && (
+      {isMobile && isOpen && (
         <div
           onClick={() => setIsOpen(false)}
           style={{
@@ -36,20 +43,35 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
       )}
       <aside
         style={{
-          width: window.innerWidth <= 768 ? (isOpen ? "240px" : "0") : "240px",
-          background: "#0f172a",
-          color: "#fff",
-          padding: window.innerWidth <= 768 ? (isOpen ? "20px" : "0") : "20px",
+          width: isMobile ? (isOpen ? "240px" : "0") : "240px",
+          background: "var(--sidebar-bg)",
+          color: "var(--text-primary)",
+          padding: isMobile ? (isOpen ? "20px" : "0") : "20px",
           overflow: "hidden",
           transition: "width 0.3s ease, padding 0.3s ease",
-          position: window.innerWidth <= 768 ? "fixed" : "static",
+          position: isMobile ? "fixed" : "static",
           height: "100vh",
           zIndex: 999,
         }}
       >
-        {isOpen || window.innerWidth > 768 ? (
+        {(isOpen || !isMobile) && (
           <>
-            <h2 style={{ marginBottom: "20px" }}>Analytics</h2>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
+              <h2 style={{ margin: 0 }}>Analytics</h2>
+              <button
+                onClick={toggleTheme}
+                style={{
+                  background: "var(--bg-secondary)",
+                  color: "var(--text-primary)",
+                  border: "1px solid var(--border)",
+                  borderRadius: "4px",
+                  padding: "5px 10px",
+                  cursor: "pointer",
+                }}
+              >
+                {theme === "dark" ? "☀️" : "🌙"}
+              </button>
+            </div>
             <nav>
               <NavLink to="/" style={linkStyle} onClick={handleLinkClick}>Dashboard</NavLink>
               <NavLink to="/chartjs" style={linkStyle} onClick={handleLinkClick}>Chart.js</NavLink>
@@ -63,7 +85,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               <NavLink to="/flow" style={linkStyle} onClick={handleLinkClick}>React Flow</NavLink>
             </nav>
           </>
-        ) : null}
+        )}
       </aside>
     </>
   );
