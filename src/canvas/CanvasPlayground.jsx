@@ -20,18 +20,37 @@ function CanvasPlayground() {
     ctx.lineCap = "round";
   }, []);
 
+  const getCoordinates = (e) => {
+    const canvas = canvasRef.current;
+    const rect = canvas.getBoundingClientRect();
+    if (e.touches) {
+      return {
+        x: e.touches[0].clientX - rect.left,
+        y: e.touches[0].clientY - rect.top,
+      };
+    } else {
+      return {
+        x: e.nativeEvent.offsetX,
+        y: e.nativeEvent.offsetY,
+      };
+    }
+  };
+
   const startDrawing = (e) => {
+    e.preventDefault();
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     isDrawing.current = true;
+    const { x, y } = getCoordinates(e);
     ctx.beginPath();
-    ctx.moveTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+    ctx.moveTo(x, y);
   };
 
   const draw = (e) => {
     if (!isDrawing.current) return;
+    e.preventDefault();
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -40,7 +59,8 @@ function CanvasPlayground() {
     ctx.strokeStyle = color;
     ctx.lineWidth = size;
 
-    ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+    const { x, y } = getCoordinates(e);
+    ctx.lineTo(x, y);
     ctx.stroke();
   };
 
@@ -109,6 +129,9 @@ function CanvasPlayground() {
         onMouseMove={draw}
         onMouseUp={stopDrawing}
         onMouseLeave={stopDrawing}
+        onTouchStart={startDrawing}
+        onTouchMove={draw}
+        onTouchEnd={stopDrawing}
         style={{
           width: "100%",
           height: "400px",
@@ -116,6 +139,7 @@ function CanvasPlayground() {
           borderRadius: "8px",
           background: "#fff",
           cursor: "crosshair",
+          touchAction: "none",
         }}
       />
     </div>

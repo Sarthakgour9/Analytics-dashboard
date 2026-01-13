@@ -1,5 +1,6 @@
 import "./ChartSetup";
 import { Bar, Line, Doughnut, Radar } from "react-chartjs-2";
+import { useState, useEffect } from "react";
 
 // mock data
 
@@ -26,13 +27,24 @@ const skillRadar = {
 //chart component
 
 function ChartJsCharts() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <div>
       {/* ROW 1 */}
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "2fr 1fr",
+          gridTemplateColumns: isMobile ? "1fr" : "2fr 1fr",
           gap: "20px",
         }}
       >
