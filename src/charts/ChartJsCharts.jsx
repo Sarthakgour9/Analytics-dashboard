@@ -2,8 +2,9 @@ import "./ChartSetup";
 import { Bar, Line, Doughnut, Radar } from "react-chartjs-2";
 import { useState, useEffect } from "react";
 
-// mock data
-
+/* =========================
+   MOCK DATA
+========================= */
 const salesByCategory = {
   labels: ["Electronics", "Clothing", "Groceries", "Books"],
   data: [42000, 28000, 35000, 15000],
@@ -24,113 +25,184 @@ const skillRadar = {
   data: [80, 70, 65, 60, 50],
 };
 
-//chart component
+/* =========================
+   SHARED CHART OPTIONS
+========================= */
+const commonOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      position: "bottom",
+      labels: {
+        color: "#e5e7eb",
+        font: { size: 12 },
+        padding: 16,
+      },
+    },
+  },
+};
 
+const axisOptions = {
+  ...commonOptions,
+  scales: {
+    x: {
+      ticks: { color: "#cbd5e1" },
+      grid: { color: "rgba(148,163,184,0.15)" },
+    },
+    y: {
+      ticks: { color: "#cbd5e1" },
+      grid: { color: "rgba(148,163,184,0.15)" },
+    },
+  },
+};
+
+/* =========================
+   MAIN COMPONENT
+========================= */
 function ChartJsCharts() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
-    <div>
+    <div className="charts-wrapper">
       {/* ROW 1 */}
       <div
+        className="charts-grid"
         style={{
-          display: "grid",
           gridTemplateColumns: isMobile ? "1fr" : "2fr 1fr",
-          gap: "20px",
         }}
       >
         <Card title="Sales by Category">
-          <Bar
-            data={{
-              labels: salesByCategory.labels,
-              datasets: [
-                {
-                  label: "Sales (₹)",
-                  data: salesByCategory.data,
-                  backgroundColor: "#2563eb",
-                },
-              ],
-            }}
-          />
+          <ChartBox>
+            <Bar
+              options={axisOptions}
+              data={{
+                labels: salesByCategory.labels,
+                datasets: [
+                  {
+                    label: "Sales (₹)",
+                    data: salesByCategory.data,
+                    backgroundColor: "#22f5ff",
+                  },
+                ],
+              }}
+            />
+          </ChartBox>
         </Card>
 
         <Card title="Revenue Split">
-          <Doughnut
-            data={{
-              labels: revenueSplit.labels,
-              datasets: [
-                {
-                  data: revenueSplit.data,
-                  backgroundColor: ["#0ea5e9", "#6366f1", "#f59e0b"],
-                },
-              ],
-            }}
-          />
+          <ChartBox>
+            <Doughnut
+              options={commonOptions}
+              data={{
+                labels: revenueSplit.labels,
+                datasets: [
+                  {
+                    data: revenueSplit.data,
+                    backgroundColor: ["#22f5ff", "#6366f1", "#f59e0b"],
+                    borderWidth: 0,
+                  },
+                ],
+              }}
+            />
+          </ChartBox>
         </Card>
       </div>
 
       {/* ROW 2 */}
-      <div style={{ marginTop: "20px" }}>
+      <div className="charts-row">
         <Card title="Monthly User Growth">
-          <Line
-            data={{
-              labels: monthlyUsers.labels,
-              datasets: [
-                {
-                  label: "Users",
-                  data: monthlyUsers.data,
-                  borderColor: "#16a34a",
-                  backgroundColor: "rgba(22,163,74,0.2)",
-                  tension: 0.4,
-                },
-              ],
-            }}
-          />
+          <ChartBox>
+            <Line
+              options={axisOptions}
+              data={{
+                labels: monthlyUsers.labels,
+                datasets: [
+                  {
+                    label: "Users",
+                    data: monthlyUsers.data,
+                    borderColor: "#2cff9a",
+                    backgroundColor: "rgba(44,255,154,0.25)",
+                    tension: 0.4,
+                    fill: true,
+                  },
+                ],
+              }}
+            />
+          </ChartBox>
         </Card>
       </div>
 
       {/* ROW 3 */}
-      <div style={{ marginTop: "20px" }}>
+      <div className="charts-row">
         <Card title="Skill Radar">
-          <Radar
-            data={{
-              labels: skillRadar.labels,
-              datasets: [
-                {
-                  label: "Skill Level",
-                  data: skillRadar.data,
-                  backgroundColor: "rgba(37,99,235,0.2)",
-                  borderColor: "#2563eb",
+          <ChartBox className="skill-radar">
+            <Radar
+              options={{
+                plugins: {
+                  legend: {
+                    labels: { color: "#e5e7eb" },
+                  },
                 },
-              ],
-            }}
-          />
+                scales: {
+                  r: {
+                    angleLines: {
+                      color: "rgba(148,163,184,0.2)",
+                    },
+                    grid: {
+                      color: "rgba(148,163,184,0.2)",
+                    },
+                    pointLabels: {
+                      color: "#e5e7eb",
+                    },
+                    ticks: {
+                      display: false,
+                    },
+                  },
+                },
+              }}
+              data={{
+                labels: skillRadar.labels,
+                datasets: [
+                  {
+                    label: "Skill Level",
+                    data: skillRadar.data,
+                    backgroundColor: "rgba(34,245,255,0.25)",
+                    borderColor: "#22f5ff",
+                    pointBackgroundColor: "#22f5ff",
+                  },
+                ],
+              }}
+            />
+          </ChartBox>
         </Card>
       </div>
     </div>
   );
 }
 
-// Ui card component
-
+/* =========================
+   UI CARD
+========================= */
 const Card = ({ title, children }) => (
-  <div
-    style={{
-      background: "#fff",
-      padding: "16px",
-      borderRadius: "8px",
-    }}
-  >
-    <h3 style={{ marginBottom: "10px" }}>{title}</h3>
+  <div className="ui-card">
+    <h3 className="card-title">{title}</h3>
+    {children}
+  </div>
+);
+
+/* =========================
+   CHART BOX
+========================= */
+const ChartBox = ({ children, className }) => (
+  <div className={`chart-box ${className || ''}`}>
     {children}
   </div>
 );

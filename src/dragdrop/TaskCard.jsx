@@ -14,7 +14,7 @@ function TaskCard({ task, from }) {
       ref={drag}
       style={{
         padding: "10px",
-        background: "#fff",
+        background: "#1d1a1a",
         marginBottom: "8px",
         borderRadius: "6px",
         cursor: "grab",

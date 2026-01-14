@@ -22,7 +22,7 @@ function Column({ title, type, tasks, moveTask }) {
         padding: "12px",
         minHeight: "300px",
         borderRadius: "8px",
-        background: isOver ? "#e0f2fe" : "#f1f5f9",
+        background: isOver ? "#000000" : "#000000",
       }}
     >
       <h3>{title}</h3>
