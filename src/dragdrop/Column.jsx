@@ -22,10 +22,12 @@ function Column({ title, type, tasks, moveTask }) {
         padding: "12px",
         minHeight: "300px",
         borderRadius: "8px",
-        background: isOver ? "#000000" : "#000000",
+        background: isOver ? "var(--bg-hover)" : "var(--bg-tertiary)",
+        border: "1px solid var(--border)",
+        transition: "all 0.2s ease",
       }}
     >
-      <h3>{title}</h3>
+      <h3 style={{ color: "var(--text-primary)", marginBottom: "12px" }}>{title}</h3>
       {tasks.map((task) => (
         <TaskCard key={task.id} task={task} from={type} />
       ))}

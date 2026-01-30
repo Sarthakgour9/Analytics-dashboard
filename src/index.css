@@ -1,10 +1,11 @@
+
 /* =========================================================
    CYBERPUNK TRANSMISSION THEME (SAFE VERSION)
    Charts • AG Grid • Maps • DnD friendly
    ========================================================= */
 
 /* -------------------------
-   ROOT VARIABLES
+   ROOT VARIABLES - DARK THEME (DEFAULT)
 -------------------------- */
 :root {
   --bg-primary: #070b14;
@@ -32,7 +33,44 @@
   --shadow-lg: 0 40px 90px rgba(0,0,0,0.65);
 
   --glass-blur: blur(16px);
+  --color-scheme: dark;
 }
+
+/* -------------------------
+   LIGHT THEME VARIABLES
+-------------------------- */
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: rgba(248, 250, 252, 0.95);
+  --bg-tertiary: rgba(241, 245, 249, 0.9);
+  --bg-hover: rgba(226, 232, 240, 0.8);
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary: #64748b;
+
+  --accent: #0ea5e9;
+  --accent-hover: #0284c7;
+  --accent-soft: rgba(14, 165, 233, 0.15);
+
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+
+  --border: rgba(148, 163, 184, 0.2);
+  --border-light: rgba(148, 163, 184, 0.4);
+
+  --shadow-sm: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-md: 0 18px 45px rgba(0,0,0,0.12);
+  --shadow-lg: 0 40px 90px rgba(0,0,0,0.15);
+  --glass-blur: blur(16px);
+  --color-scheme: light;
+
+  --sidebar-bg: rgba(248, 250, 252, 0.95);
+  --sidebar-text: #475569;
+  --sidebar-active: rgba(226, 232, 240, 0.8);
+}
+
 
 /* -------------------------
    RESET
@@ -50,7 +88,7 @@ body {
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu;
   background: var(--bg-primary);
   color: var(--text-primary);
-  color-scheme: dark;
+  color-scheme: var(--color-scheme);
   overflow-x: hidden;
 }
 
@@ -65,6 +103,13 @@ body {
     radial-gradient(circle at 80% 20%, rgba(255,183,3,0.1), transparent 40%),
     linear-gradient(135deg, #05080f, #070b14, #0b1225);
   overflow: hidden;
+}
+
+[data-theme="light"] .app-shell {
+  background:
+    radial-gradient(circle at 20% 40%, rgba(14,165,233,0.08), transparent 45%),
+    radial-gradient(circle at 80% 20%, rgba(249,115,22,0.06), transparent 40%),
+    linear-gradient(135deg, #f8fafc, #f1f5f9, #e2e8f0);
 }
 
 /* -------------------------
@@ -166,7 +211,7 @@ a:hover {
 button {
   background: linear-gradient(
     135deg,
-    rgba(34,245,255,0.18),
+    var(--accent-soft),
     rgba(34,245,255,0.06)
   );
   border: 1px solid var(--border-light);
@@ -184,8 +229,8 @@ button:hover {
 }
 
 button.primary {
-  background: linear-gradient(135deg, var(--accent), #0fdbe6);
-  color: #001015;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  color: #ffffff;
 }
 
 /* -------------------------
@@ -194,7 +239,7 @@ button.primary {
 input,
 textarea,
 select {
-  background: rgba(10,15,30,0.9);
+  background: var(--bg-tertiary);
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 0.7em 0.9em;
@@ -214,7 +259,7 @@ textarea:focus {
 .data-layer {
   position: relative;
   z-index: 10;
-  background: #070b14;
+  background: var(--bg-primary);
 }
 
 /* Absolute safety */
@@ -225,7 +270,7 @@ svg,
 .ag-theme-quartz,
 .mapboxgl-map,
 .leaflet-container {
-  background: #070b14 !important;
+  background: var(--bg-primary) !important;
   backdrop-filter: none !important;
   filter: none !important;
   isolation: isolate;
@@ -243,7 +288,7 @@ svg,
 ========================================================= */
 [draggable="true"],
 [draggable="true"] * {
-  color: #f8fafc !important;
+  color: var(--text-primary) !important;
   opacity: 1 !important;
   filter: none !important;
 }

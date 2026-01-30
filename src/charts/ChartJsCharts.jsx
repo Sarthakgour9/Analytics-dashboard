@@ -1,6 +1,7 @@
 import "./ChartSetup";
 import { Bar, Line, Doughnut, Radar } from "react-chartjs-2";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { ThemeContext } from "../context/ThemeContext";
 
 /* =========================
    MOCK DATA
@@ -28,40 +29,42 @@ const skillRadar = {
 /* =========================
    SHARED CHART OPTIONS
 ========================= */
-const commonOptions = {
+const getCommonOptions = () => ({
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
     legend: {
       position: "bottom",
       labels: {
-        color: "#e5e7eb",
+        color: getComputedStyle(document.documentElement).getPropertyValue('--text-secondary').trim(),
         font: { size: 12 },
         padding: 16,
       },
     },
   },
-};
+});
 
-const axisOptions = {
-  ...commonOptions,
+const getAxisOptions = () => ({
+  ...getCommonOptions(),
   scales: {
     x: {
-      ticks: { color: "#cbd5e1" },
-      grid: { color: "rgba(148,163,184,0.15)" },
+      ticks: { color: getComputedStyle(document.documentElement).getPropertyValue('--text-secondary').trim() },
+      grid: { color: getComputedStyle(document.documentElement).getPropertyValue('--border').trim() },
     },
     y: {
-      ticks: { color: "#cbd5e1" },
-      grid: { color: "rgba(148,163,184,0.15)" },
+      ticks: { color: getComputedStyle(document.documentElement).getPropertyValue('--text-secondary').trim() },
+      grid: { color: getComputedStyle(document.documentElement).getPropertyValue('--border').trim() },
     },
   },
-};
+});
 
 /* =========================
    MAIN COMPONENT
 ========================= */
 function ChartJsCharts() {
+  const { theme } = useContext(ThemeContext);
   const [isMobile, setIsMobile] = useState(false);
+  const [chartOptions, setChartOptions] = useState({ common: {}, axis: {} });
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -69,6 +72,56 @@ function ChartJsCharts() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    // Update chart options when theme changes
+    const textColor = getComputedStyle(document.documentElement).getPropertyValue('--text-secondary').trim();
+    const borderColor = getComputedStyle(document.documentElement).getPropertyValue('--border').trim();
+
+    setChartOptions({
+      common: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: "bottom",
+            labels: {
+              color: textColor,
+              font: { size: 12 },
+              padding: 16,
+            },
+          },
+        },
+      },
+      axis: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: "bottom",
+            labels: {
+              color: textColor,
+              font: { size: 12 },
+              padding: 16,
+            },
+          },
+        },
+        scales: {
+          x: {
+            ticks: { color: textColor },
+            grid: { color: borderColor },
+          },
+          y: {
+            ticks: { color: textColor },
+            grid: { color: borderColor },
+          },
+        },
+      },
+    });
+  }, [theme]);
+
+  const accentColor = theme === 'dark' ? '#22f5ff' : '#0ea5e9';
+  const successColor = theme === 'dark' ? '#2cff9a' : '#10b981';
 
   return (
     <div className="charts-wrapper">
@@ -82,14 +135,14 @@ function ChartJsCharts() {
         <Card title="Sales by Category">
           <ChartBox>
             <Bar
-              options={axisOptions}
+              options={chartOptions.axis}
               data={{
                 labels: salesByCategory.labels,
                 datasets: [
                   {
                     label: "Sales (₹)",
                     data: salesByCategory.data,
-                    backgroundColor: "#22f5ff",
+                    backgroundColor: accentColor,
                   },
                 ],
               }}
@@ -100,13 +153,13 @@ function ChartJsCharts() {
         <Card title="Revenue Split">
           <ChartBox>
             <Doughnut
-              options={commonOptions}
+              options={chartOptions.common}
               data={{
                 labels: revenueSplit.labels,
                 datasets: [
                   {
                     data: revenueSplit.data,
-                    backgroundColor: ["#22f5ff", "#6366f1", "#f59e0b"],
+                    backgroundColor: [accentColor, "#6366f1", "#f59e0b"],
                     borderWidth: 0,
                   },
                 ],
@@ -121,15 +174,15 @@ function ChartJsCharts() {
         <Card title="Monthly User Growth">
           <ChartBox>
             <Line
-              options={axisOptions}
+              options={chartOptions.axis}
               data={{
                 labels: monthlyUsers.labels,
                 datasets: [
                   {
                     label: "Users",
                     data: monthlyUsers.data,
-                    borderColor: "#2cff9a",
-                    backgroundColor: "rgba(44,255,154,0.25)",
+                    borderColor: successColor,
+                    backgroundColor: theme === 'dark' ? 'rgba(44,255,154,0.25)' : 'rgba(16,185,129,0.15)',
                     tension: 0.4,
                     fill: true,
                   },
@@ -148,19 +201,19 @@ function ChartJsCharts() {
               options={{
                 plugins: {
                   legend: {
-                    labels: { color: "#e5e7eb" },
+                    labels: { color: getComputedStyle(document.documentElement).getPropertyValue('--text-secondary').trim() },
                   },
                 },
                 scales: {
                   r: {
                     angleLines: {
-                      color: "rgba(148,163,184,0.2)",
+                      color: getComputedStyle(document.documentElement).getPropertyValue('--border').trim(),
                     },
                     grid: {
-                      color: "rgba(148,163,184,0.2)",
+                      color: getComputedStyle(document.documentElement).getPropertyValue('--border').trim(),
                     },
                     pointLabels: {
-                      color: "#e5e7eb",
+                      color: getComputedStyle(document.documentElement).getPropertyValue('--text-secondary').trim(),
                     },
                     ticks: {
                       display: false,
@@ -174,9 +227,9 @@ function ChartJsCharts() {
                   {
                     label: "Skill Level",
                     data: skillRadar.data,
-                    backgroundColor: "rgba(34,245,255,0.25)",
-                    borderColor: "#22f5ff",
-                    pointBackgroundColor: "#22f5ff",
+                    backgroundColor: theme === 'dark' ? 'rgba(34,245,255,0.25)' : 'rgba(14,165,233,0.15)',
+                    borderColor: accentColor,
+                    pointBackgroundColor: accentColor,
                   },
                 ],
               }}

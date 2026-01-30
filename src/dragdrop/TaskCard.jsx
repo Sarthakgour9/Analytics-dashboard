@@ -14,11 +14,14 @@ function TaskCard({ task, from }) {
       ref={drag}
       style={{
         padding: "10px",
-        background: "#1d1a1a",
+        background: "var(--bg-secondary)",
+        border: "1px solid var(--border)",
+        color: "var(--text-primary)",
         marginBottom: "8px",
         borderRadius: "6px",
         cursor: "grab",
         opacity: isDragging ? 0.5 : 1,
+        transition: "all 0.2s ease",
       }}
     >
       {task.title}

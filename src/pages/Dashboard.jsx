@@ -26,13 +26,15 @@ function Dashboard() {
 const StatCard = ({ title, value }) => (
   <div
     style={{
-      background: "#fff",
+      background: "var(--bg-secondary)",
       padding: "16px",
       borderRadius: "8px",
+      border: "1px solid var(--border)",
+      color: "var(--text-primary)",
     }}
   >
-    <h3>{title}</h3>
-    <p style={{ color: "#64748b" }}>{value}</p>
+    <h3 style={{ color: "var(--text-primary)", marginBottom: "8px" }}>{title}</h3>
+    <p style={{ color: "var(--text-secondary)" }}>{value}</p>
   </div>
 );
 
