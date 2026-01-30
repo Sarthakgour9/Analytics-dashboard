@@ -1,5 +1,5 @@
 import CanvasPlayground from "../canvas/canvasPlayground";
-
+ 
 function CanvasPage() {
     return (
         <div>
