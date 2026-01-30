@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 function CanvasPlayground() {
   const canvasRef = useRef(null);
   const isDrawing = useRef(false);
-
+ 
   const [color, setColor] = useState("#000000");
   const [size, setSize] = useState(4);
 
