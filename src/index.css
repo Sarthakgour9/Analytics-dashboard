@@ -341,6 +341,7 @@ svg,
 }
 
 .chart-box.skill-radar {
-  height: 10000px;
-  align-self:center;
+  height: 500px;
+  align-self: center;
+  
 }
